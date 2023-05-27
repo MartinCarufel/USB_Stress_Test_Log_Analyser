@@ -18,6 +18,7 @@ class main_app(tk.Tk):
         self.dir_entry_var = tk.StringVar()
         self.file_entry_var = tk.StringVar()
         self.file_ext_entry_var = tk.StringVar()
+        self.file_ext_entry_var.set(".log")
 
         self.dir_label = tk.Label(self, text="Directory", justify="right", anchor="e")
         self.dir_label.grid(row=self.DIR_ROW, column=0, padx=5, pady=5, sticky=tk.E)
@@ -57,35 +58,24 @@ class main_app(tk.Tk):
 
 
     def browse(self, command, variable):
-        print(f"{command}")
-        # self.dir_path = filedialog.askdirectory()
         self.dir_path = command()
         variable.set(self.dir_path)
-        pass
 
     def add_all_corresponding_file(self):
         self.ext_list = self.file_ext_entry_var.get().split(",")
         self.ext_list = [x.strip() for x in self.ext_list]
-
         for ext in self.ext_list:
             pattern = ext
             for file in os.listdir(self.dir_path):
                 if re.search(ext, file) != None:
                     self.file_box.insert(tk.END, self.dir_path + "/" + file + "\n")
-                    print(self.dir_path + "/" + pattern)
-                    # tf.writelines(path + "/" + file + "\n")
-
-        print(self.ext_list)
-        pass
 
     def add_file(self):
-        print(self.file_entry_var.get())
         char_to_strip = ["(", ")", " ", ",", "'"]
         files = self.file_entry_var.get().split(", ")
         for file in files:
             for ch in char_to_strip:
                 file = file.strip(ch)
-
             self.file_box.insert(tk.END, file + "\n")
         pass
 
@@ -96,6 +86,7 @@ class main_app(tk.Tk):
             if file != "":
                 files_list_clean.append(file)
         return files_list_clean
+
     def process(self):
         usb_err_summary = []
         messagebox.showwarning(title="Warning", message="Previous result data will be erase/overwrite")

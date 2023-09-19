@@ -296,7 +296,7 @@ def main():
         reg_ex = 'IO-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]'  # Find in path/file the IO serial
         hp_serial = re.search(pattern=reg_ex, string=file).group()
         
-        reg_ex_hpc = 'DWIOK-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]'
+        reg_ex_hpc = "DWIOK-[0-9][0-9]-.{6}"
         try:
             hpc_serial = re.search(pattern=reg_ex_hpc, string=file).group()
         except AttributeError:
